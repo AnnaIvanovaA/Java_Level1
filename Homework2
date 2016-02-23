@@ -1,0 +1,53 @@
+import java.util.Scanner;
+import java.lang.Math;
+
+/**
+ * Created by aivanova on 23.02.2016.
+ */
+public class Main {
+
+    public void main (String[] args){
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("This program will calculate x in quadric equation ax^2 + bx + c = 0");
+        System.out.println("Please enter any number:");
+        System.out.print("a:");
+        int a = scanner.nextInt();
+
+        System.out.println("Please enter any number:");
+        System.out.print("b:");
+        int b = scanner.nextInt();
+
+        System.out.println("Please enter any number:");
+        System.out.print("c:");
+        int c = scanner.nextInt();
+
+        double discriminant = Math.pow(c, 2) - 4*a*c;
+        System.out.println("discriminant = " + discriminant);
+
+        if (a != 0) {
+            if (discriminant > 0) {
+                System.out.println("***There are two distinct roots***");
+                double x1 = (-b + Math.sqrt(discriminant))/(2*a);
+                double x2 = (-b - Math.sqrt(discriminant))/(2*a);
+                System.out.println("x1 = " + x1);
+                System.out.println("x2 = " + x2);
+            }
+            else if (discriminant == 0) {
+                System.out.println("***There is one real root***");
+                double x = -b / (2*a);
+                System.out.println("x = " + x);
+            }
+            else if (discriminant < 0) {
+                System.out.println("***There are two complex roots***");
+                double x = -b / (2*a);
+                double complex = (Math.sqrt(Math.abs(discriminant)))/(2*a);
+                System.out.println("x1 = " + x + " + " + complex + "i");
+                System.out.println("x1 = " + x + " - " + complex + "i");
+            }
+        }
+
+
+    }
+}
