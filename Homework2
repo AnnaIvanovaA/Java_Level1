@@ -10,7 +10,7 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("This program will calculate x in quadric equation ax^2 + bx + c = 0");
+        System.out.println("This program will calculate x in quadratic equation ax^2 + bx + c = 0");
         System.out.println("Please enter any number:");
         System.out.print("a:");
         int a = scanner.nextInt();
@@ -24,7 +24,7 @@ public class Main {
         int c = scanner.nextInt();
 
         double discriminant = Math.pow(c, 2) - 4*a*c;
-        System.out.println("discriminant = " + discriminant);
+        System.out.println("Discriminant = " + discriminant);
 
         if (a != 0) {
             if (discriminant > 0) {
@@ -44,8 +44,12 @@ public class Main {
                 double x = -b / (2*a);
                 double complex = (Math.sqrt(Math.abs(discriminant)))/(2*a);
                 System.out.println("x1 = " + x + " + " + complex + "i");
-                System.out.println("x1 = " + x + " - " + complex + "i");
+                System.out.println("x2 = " + x + " - " + complex + "i");
             }
+        } else {
+            System.out.println("It's not a quadratic equation ax^2 + bx + c = 0");
+            System.out.println("It's a simple linear equation bx + c = 0");
+            
         }
 
 
