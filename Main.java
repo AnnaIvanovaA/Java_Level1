@@ -1,119 +1,70 @@
-package com.levelup.lesson3;
-
-import java.util.Scanner;
-
+package com.levelup.lesson5;
 
 /**
- * Created by Student-25 on 25.02.2016.
+ * Created by Anna on 12.03.2016.
  */
 public class Main {
 
     public static void main(String[] args) {
 
-        //int i = 0;
+//        int[] array = new int[10];
+//        for (int i = 0; i < array.length; i++) {
+//            array[i] = (int) (Math.random()*100-50);
+//        }
+//
+//        int[] temp = new int[array.length+1];
+//        for (int i = 0; i < array.length ; i++) {
+//            temp[i] = array[i];
+//        }
+//        array = temp;
+//
+//        array[10] = 1000;
+//
+//        for (int i = 0; i < 11; i++) {
+//            System.out.println(array[i]);
+//
+//        }
 
-      //  while (i < 10) {
-      //      //iteration
-      //      System.out.println("I love Java " + i);
-      //      i = i + 1;
-     //   }
+        MyArrayList list = new MyArrayList();
+        list.add(55);
+        list.add(93);
+        list.add(34);
+        list.add(86);
+        list.add(101);
 
-        // 1 2 3
-        // a b ch
-/*
-        i = 1;
-        char ch = 'a';
+        System.out.println("size " + list.size());
 
-        while (ch < 'd'){
-            while (i < 4){
-                System.out.println(ch + " " + i);
-                //ch = (char)(ch+1)
-                i ++;
-            }
-            ch ++;
-            i = 1;
-        }
-*/
+        list.insert(1, 48);
 
-        int x = 4;
-        x = x + 3;
-        x += 3;
-        x -= 7;
-        x ++; // increment
-        x --; //decrement
 
-      /*
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("a:");
-        int a = scanner.nextInt();
-        System.out.println("b:");
-        int b = scanner.nextInt();
-        System.out.println("c:");
-        int c = scanner.nextInt();
-        System.out.println("d:");
-        int d = scanner.nextInt();
+        list.remove(3);
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(list.get(i));
 
-        int i = a;
-        int k = c;
-        while (i < b){
-            while (k < d){
-                int result = i * k;
-                //System.out.print(result + " \t\t");
-                System.out.printf("%4d", result);
-
-                k ++;
-            }
-            i ++;
-            k = c;
-            System.out.println();
-        }
-        */
-
-       // for (int j = 0; j<10; j++){
-      //      System.out.println(j);
-      //  }
-/*
-        int[] array = new int[20];  //all 0s, not nulls
-        //array[0] = 76;
-        //array[1] = array[0]*3;
-
-        for (int i = array.length-1; i >= 0; i--){
-            array[i] = i;
-        }
-        for (int i = 0; i < array.length; i++){
-            System.out.println(array[i]);
         }
 
-        for (int i = 0; i < array.length; i++){
-            array[i] = array.length - i -1;   //в обратном порядке
-            //break;
-        }
-        for (int i = 0; i < array.length; i++){
-            System.out.println(array[i]);
-        }
-*/
-
-        int array[] = new int[10];
-
-                //-347..935
-        for (int i = 0; i < array.length; i++){
-            //array[i] = (int) (Math.random() * 100 - 50);   //0..1 -> 0..100 --> -50..50
-            array[i] = (int) (Math.random()*1282 - 347);
-            System.out.print(array[i] + "\t");
-        }
-        int min = array[0];
-
-        for (int i = 0; i < array.length; i++){
-            if (min > array[i]){
-                min = array[i];
-            }
+        MyStack stack = new MyStack();
+        stack.push(89);
+        stack.push(89);
+        stack.push(89);
+        stack.push(89);
+        for (int i = 0; i < stack.size(); i++) {
+            System.out.println(stack.get(i));
         }
 
-        System.out.println("Min = " + min);
+        stack.pop();
+        System.out.println("");
+        for (int i = 0; i < stack.size(); i++) {
+            System.out.println(stack.get(i));
+        }
+        stack.push(111);
+        System.out.println("");
+        System.out.println(stack.peek());
+
+
+        Node first = new Node();
+        Node second = new Node();
+        Node third = new Node();
 
     }
-/*
-DZ
-1. diff postfix and prefix increment (decrement)
- */
 }
