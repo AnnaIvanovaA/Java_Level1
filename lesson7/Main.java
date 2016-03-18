@@ -48,7 +48,7 @@ public class Main {
 
         JScrollPane scroller = new JScrollPane(text);
         scroller.setViewportView(text);
-        //text.setLineWrap(true);
+        text.setLineWrap(true);
 
         scroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scroller.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
