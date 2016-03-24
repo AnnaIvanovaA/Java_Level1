@@ -1,4 +1,4 @@
-package com.levelup;
+package com.levelup.lesson9;
 
 import java.util.Stack;
 
@@ -7,46 +7,113 @@ import java.util.Stack;
  */
 public class CalculatorModel {
     private View view;
-    private int operationCount = 0;
+    private String operation;
     private Stack<Double> operands;
     private Stack<String> operations;
+    private String displayText;
+    private Double result;
+    private Double memory;
+    private Double functionResult;
 
-
-    private Double result = 0.0;
 
     public CalculatorModel() {
         operands = new Stack<>();
         operations = new Stack<>();
+        result = 0.0;
+        memory = 0.0;
+        functionResult = 0.0;
     }
 
     public void operate (String operand1, String operation){
         double op1 = Double.parseDouble(operand1);
-        operands.push(op1);
-        //this.operation = operation;
+        this.operation = operation;
 
-        if (operation.equals("=")){
-            for (int i = 0; i < operationCount-1; i++) {
-                if (operations.peek().equals("+")){
-                    result = operands.pop() + operands.pop();
-                }
-                if (operations.peek().equals("-")){
-                    result = operands.pop() - operands.pop();
-                }
-                if (operations.peek().equals("*")){
-                    result = operands.pop() * operands.pop();
-                }
-                if (operations.pop().equals("/")){
-                    result = operands.pop() / operands.pop();
-                }
-                operations.pop();
-            }
-            view.setResult(result);
-            operationCount = 0;
-            result = 0.0;
-        } else{
-            view.setEmpty();
+        //if it's the first entry - save operand 1 and operation
+        if (operands.isEmpty()) {
+            operands.push(op1);
             operations.push(operation);
-            operationCount++;
+            view.setNewText("0");
+            System.out.println("empty op1 " + operands.peek() + " operation " + operations.peek());
+        } //if not - check the previous operation and make a calculation
+        else {
+                if (operations.peek().equals("+")) {
+                    result = operands.pop() + op1;
+                } else if (operations.peek().equals("-")) {
+                    result = operands.pop() - op1;
+                } else if (operations.peek().equals("*")) {
+                    result = operands.pop() * op1;
+                } else if (operations.peek().equals("/")) {
+                    result = operands.pop() / op1;
+                }
+
+            operands.push(result);
+
+                if (operation.equals("=")) {
+                    view.setResult(result);  //display the result of calculation
+                    operands.clear();
+
+                } else {                       //save the result as operand 1 and the new operation for the next calculation
+                    //operands.push(result);
+                    operations.push(operation);
+                    view.setNewText("0");
+                    System.out.println("op1 " + operands.peek() + " operation " + operations.peek());
+                }
+            }
+
+    }
+
+    public void operateWithMemory (String displayText, String operation){
+        this.displayText = displayText;
+        this.operation = operation;
+
+
+        if (operation.equals("C")){
+            view.setNewText("0");
+            operands.clear();
+            operations.clear();
+        }
+
+        if (operation.equals("<-")){
+            char[] charArray = displayText.toCharArray();
+            String newDisplayText = "";
+            for (int i = 0; i < charArray.length - 1; i++) {
+                newDisplayText += charArray[i];
+            }
+            view.setNewText(newDisplayText);
+        }
+
+        if (operation.equals("MC")){
+            memory = 0.0;
+            view.setNewText("0");
+        }
+        if (operation.equals("MR")){
+            view.setNewText(""+memory);//!!!!!!!!!!!todo
+        }
+        if (operation.equals("M+")){
+            memory += Double.parseDouble(displayText);
+        }
+        if (operation.equals("M-")){
+            memory -= Double.parseDouble(displayText);
+        }
+
+    }
+
+    public void operateWithFunctions (String operand, String operation){
+        Double op = Double.parseDouble(operand);
+        this.operation = operation;
+
+
+        if (operation.equals("sin")){
+            view.setNewText(String.valueOf((Math.sin(op))));
+        }
+        if (operation.equals("cos")){
+            view.setNewText(String.valueOf((Math.cos(op))));
+        }
+        if (operation.equals("tg")){
+            view.setNewText(String.valueOf((Math.tan(op))));
+        }
+        if (operation.equals("arctg")){
+            view.setNewText(String.valueOf((Math.atan(op))));
         }
     }
 
@@ -59,14 +126,10 @@ public class CalculatorModel {
 /*
 отследить ввод второго операнда
 изменить оперэйт для вычисления суммы и показ результата
-
-
 1+2 + -- посчитать результат --записать в стек как первый операнд
-
 кнопки . и +-
 вспомогательные кнопки
 функциональные - синус косинус тангенс арктангенс логарифм натуральный лн, десятичный лг, лог2, квадрат числа, корень, в степень
-
 красивый калькулятор
 возможность в верхнем меню убирать панель функциональных кнопок
  */
