@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 /**
  * Created by Student-20 on 20.03.2016.
  */
+
 public class View  extends JFrame {
 
     private JLabel display;
@@ -30,13 +31,6 @@ public class View  extends JFrame {
         }
     };
 
-    private ActionListener scientificViewListener = new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            addScientificPanel();
-        }
-    };
-
     private ActionListener scientificBtnListener = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -53,8 +47,13 @@ public class View  extends JFrame {
     }
 
     public void setResult(Double result){
-        String resultText = String.valueOf(result);
-        display.setText(resultText);
+        double number = result;
+        int decimal = (int) number;
+        if ((number - decimal)==0){
+            display.setText(String.valueOf(decimal));
+        } else{
+            display.setText(String.valueOf(number));
+        }
     }
     public void setNewText(String text){
         display.setText(text);
@@ -66,21 +65,7 @@ public class View  extends JFrame {
         setBounds(200,200,400,400);
         setTitle("Calculator");
 
-        JMenuBar bar = new JMenuBar();
-        JMenu settingsMenu = new JMenu("Settings");
-        JMenuItem viewMenu = new JMenu("View");
-        JMenuItem standardViewMenuItem = new JMenuItem("Standard") ;
-        JMenuItem scientificViewMenuItem = new JMenuItem("Scientific") ;
-
-        //standardViewMenuItem.addActionListener();
-        scientificViewMenuItem.addActionListener(scientificViewListener);
-
-
-        viewMenu.add(standardViewMenuItem);
-        viewMenu.add(scientificViewMenuItem);
-        settingsMenu.add(viewMenu);
-        bar.add(settingsMenu);
-
+        //create panels
         JPanel northPanel = new JPanel(new GridLayout(2,1));
         display = new JLabel("0");
 
@@ -89,6 +74,9 @@ public class View  extends JFrame {
         JPanel arithmeticPanel = new JPanel(new GridLayout(2,2));
         JPanel supportPanel = new JPanel (new GridLayout(1,6));
 
+        JPanel westPanel = new JPanel(new GridLayout(5,2));
+
+        // add buttons with numbers
         JButton[] numBtns = new JButton[10];
         for (int i = 0; i < numBtns.length; i++) {
             numBtns[i] = new JButton(String.valueOf(i));
@@ -123,20 +111,21 @@ public class View  extends JFrame {
                 display.setText(display.getText() + ".");
             }
         });
-        JButton unaryMinusBtu = new JButton("+/-");
-        unaryMinusBtu.addActionListener(new ActionListener() {
+        JButton unaryMinusBtn = new JButton("+/-");
+        unaryMinusBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if ((!display.getText().equals("0"))||(!display.getText().equals("0.0"))){
-                    display.setText(String.valueOf( -Double.parseDouble(display.getText())));
+                if ((!display.getText().equals("0")) || (!display.getText().equals("0.0"))) {
+                    display.setText(String.valueOf(-Double.parseDouble(display.getText())));
                 }
             }
         });
 
         numPanel.add(numBtns[0]);
         numPanel.add(dotBtn);
-        numPanel.add(unaryMinusBtu);
+        numPanel.add(unaryMinusBtn);
 
+        //add arithmetic buttons
         JButton addBtn = new JButton("+");
         JButton subBtn = new JButton("-");
         JButton mulBtn = new JButton("*");
@@ -150,7 +139,20 @@ public class View  extends JFrame {
         JButton clearBtn = new JButton("C");
         JButton backspaceBtn = new JButton("<-");
 
+        //add functional buttons
+        JButton sinBtn = new JButton("sin");
+        JButton cosBtn = new JButton("cos");
+        JButton tgBtn = new JButton("tg");
+        JButton arctg = new JButton("arctg");
+        JButton lnBtn = new JButton("ln");
 
+        JButton lgBtn = new JButton("lg");
+        JButton log2Btn = new JButton("log2");
+        JButton x2Btn = new JButton("x^2");
+        JButton sqrtBtn = new JButton("sqrt");
+        JButton powerBtn = new JButton("^");
+
+        //add action listeners to buttons
         addBtn.addActionListener(arithmeticBtnListener);
         subBtn.addActionListener(arithmeticBtnListener);
         mulBtn.addActionListener(arithmeticBtnListener);
@@ -164,49 +166,6 @@ public class View  extends JFrame {
         clearBtn.addActionListener(memoryBtnListener);
         backspaceBtn.addActionListener(memoryBtnListener);
 
-
-
-        arithmeticPanel.add(addBtn);
-        arithmeticPanel.add(subBtn);
-        arithmeticPanel.add(mulBtn);
-        arithmeticPanel.add(divBtn);
-
-        supportPanel.add(mcBtn);
-        supportPanel.add(mrBtn);
-        supportPanel.add(mPlusBtn);
-        supportPanel.add(mMinusBtn);
-        supportPanel.add(clearBtn);
-        supportPanel.add(backspaceBtn);
-
-        eastPanel.add(arithmeticPanel);
-        eastPanel.add(resultBtn);
-
-        northPanel.add(display);
-        northPanel.add(supportPanel);
-
-        setJMenuBar(bar);
-        add(BorderLayout.NORTH, northPanel);
-        add(BorderLayout.CENTER, numPanel);
-        add(BorderLayout.EAST, eastPanel);
-
-    }
-
-    private void addScientificPanel(){
-        setBounds(200, 200, 400, 500);
-        JPanel westPanel = new JPanel(new GridLayout(5,2));
-
-        JButton sinBtn = new JButton("sin");
-        JButton cosBtn = new JButton("cos");
-        JButton tgBtn = new JButton("tg");
-        JButton arctg = new JButton("arctg");
-        JButton lnBtn = new JButton("ln");
-
-        JButton lgBtn = new JButton("lg");
-        JButton log2Btn = new JButton("log2");
-        JButton x2Btn = new JButton("x^2");
-        JButton sqrtBtn = new JButton("sqrt");
-        JButton powerBtn = new JButton("^");
-
         sinBtn.addActionListener(scientificBtnListener);
         cosBtn.addActionListener(scientificBtnListener);
         tgBtn.addActionListener(scientificBtnListener);
@@ -218,6 +177,19 @@ public class View  extends JFrame {
         x2Btn.addActionListener(scientificBtnListener);
         sqrtBtn.addActionListener(scientificBtnListener);
         powerBtn.addActionListener(scientificBtnListener);
+
+        //add buttons to panels
+        arithmeticPanel.add(addBtn);
+        arithmeticPanel.add(subBtn);
+        arithmeticPanel.add(mulBtn);
+        arithmeticPanel.add(divBtn);
+
+        supportPanel.add(mcBtn);
+        supportPanel.add(mrBtn);
+        supportPanel.add(mPlusBtn);
+        supportPanel.add(mMinusBtn);
+        supportPanel.add(clearBtn);
+        supportPanel.add(backspaceBtn);
 
         westPanel.add(sinBtn);
         westPanel.add(cosBtn);
@@ -231,7 +203,47 @@ public class View  extends JFrame {
         westPanel.add(sqrtBtn);
         westPanel.add(powerBtn);
 
+        eastPanel.add(arithmeticPanel);
+        eastPanel.add(resultBtn);
+
+        northPanel.add(display);
+        northPanel.add(supportPanel);
+
+
+        JMenuBar bar = new JMenuBar();
+        JMenu settingsMenu = new JMenu("Settings");
+        JMenuItem viewMenu = new JMenu("View");
+        JMenuItem standardViewMenuItem = new JMenuItem("Standard") ;
+        JMenuItem scientificViewMenuItem = new JMenuItem("Scientific") ;
+
+        standardViewMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setBounds(200, 200, 400, 400);
+                westPanel.setVisible(false);
+            }
+        });
+        scientificViewMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setBounds(200, 200, 400, 500);
+                westPanel.setVisible(true);
+            }
+        });
+
+
+        viewMenu.add(standardViewMenuItem);
+        viewMenu.add(scientificViewMenuItem);
+        settingsMenu.add(viewMenu);
+        bar.add(settingsMenu);
+
+        setJMenuBar(bar);
+        add(BorderLayout.NORTH, northPanel);
+        add(BorderLayout.CENTER, numPanel);
+        add(BorderLayout.EAST, eastPanel);
+
         add(BorderLayout.WEST, westPanel);
+        westPanel.setVisible(false);//hide west panel with functional buttons
     }
 
 }
