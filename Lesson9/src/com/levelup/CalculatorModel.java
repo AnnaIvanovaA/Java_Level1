@@ -33,7 +33,7 @@ public class CalculatorModel {
             operands.push(op1);
             operations.push(operation);
             view.setNewText("0");
-            System.out.println("empty op1 " + operands.peek() + " operation " + operations.peek());
+
         } //if not - check the previous operation and make a calculation
         else {
                 if (operations.peek().equals("+")) {
@@ -53,10 +53,8 @@ public class CalculatorModel {
                     operands.clear();
 
                 } else {                       //save the result as operand 1 and the new operation for the next calculation
-                    //operands.push(result);
                     operations.push(operation);
                     view.setNewText("0");
-                    System.out.println("op1 " + operands.peek() + " operation " + operations.peek());
                 }
             }
 
@@ -84,10 +82,10 @@ public class CalculatorModel {
 
         if (operation.equals("MC")){
             memory = 0.0;
-            view.setNewText("0");
+            view.setResult(0.0);
         }
         if (operation.equals("MR")){
-            view.setNewText(""+memory);//!!!!!!!!!!!todo
+            view.setResult(memory);
         }
         if (operation.equals("M+")){
             memory += Double.parseDouble(displayText);
@@ -104,17 +102,19 @@ public class CalculatorModel {
 
 
         if (operation.equals("sin")){
-            view.setNewText(String.valueOf((Math.sin(op))));
+            view.setResult(Math.sin(op));
         }
         if (operation.equals("cos")){
-            view.setNewText(String.valueOf((Math.cos(op))));
+            view.setResult(Math.cos(op));
         }
         if (operation.equals("tg")){
-            view.setNewText(String.valueOf((Math.tan(op))));
+            view.setResult(Math.tan(op));
         }
         if (operation.equals("arctg")){
-            view.setNewText(String.valueOf((Math.atan(op))));
+            view.setResult(Math.atan(op));
         }
+
+
     }
 
     public void setView (View view){
