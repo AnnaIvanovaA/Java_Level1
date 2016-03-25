@@ -1,9 +1,10 @@
-package com.levelup.lesson7;
+package com.levelup;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.*;
 
 /**
  * Created by aivanova on 15.03.2016.
@@ -46,6 +47,67 @@ public class Main {
             }
         });
 
+        ActionListener saveMenuItemListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                BufferedReader reader = null;
+                PrintWriter writer = null;
+                try {
+                    reader = new BufferedReader(
+                            new InputStreamReader(
+                                    new FileInputStream("")
+                            )
+                    );
+
+                    writer = new PrintWriter(
+                            //new FileOutputStream("output.txt", true), false
+                            new FileOutputStream("output.txt"), false
+                    ); //true - data in the end, false - autoflush
+
+                } catch (FileNotFoundException m){
+                    m.printStackTrace();
+                }
+
+                if (writer != null ){
+                    int bufferSize = 0;
+                    String line;
+                    try {
+                        while ((line = reader.readLine()) != null) {
+                            writer.println(line);
+                            bufferSize++;
+                            if (bufferSize == 3) {
+                                writer.flush();
+                                bufferSize = 0;
+                            }
+                        }
+                    } catch (IOException m){
+                        m.printStackTrace();
+                    }
+
+                    writer.flush(); //вызывается перед закрытием потока, очищает буффер, запись в файл
+                    writer.close(); //запись только когда закрывается поток
+                }
+                if (reader != null){
+                    try {
+                        reader.close();
+                    } catch (IOException m){
+                        m.printStackTrace();
+                    }
+
+                }
+            }
+        };
+
+        JMenuBar bar = new JMenuBar();
+        JMenu fileMenu = new JMenu("File");
+        JMenuItem saveMenuItem = new JMenuItem("Save");
+
+        saveMenuItem.addActionListener(saveMenuItemListener);
+
+        fileMenu.add(saveMenuItem);
+        bar.add(fileMenu);
+
         JScrollPane scroller = new JScrollPane(text);
         scroller.setViewportView(text);
         text.setLineWrap(true);
@@ -57,9 +119,8 @@ public class Main {
         mainFrame.add(BorderLayout.WEST, lowerBtn);
         mainFrame.add(BorderLayout.CENTER, upperBtn);
         mainFrame.add(BorderLayout.EAST, clearBtn);
-
-
-
+        mainFrame.setJMenuBar(bar);
+        
         mainFrame.setVisible(true);
     }
 }
